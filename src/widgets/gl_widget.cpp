@@ -116,7 +116,6 @@ void GLWidget::wheelEvent(QWheelEvent *event) {
 void GLWidget::initializeGL() {
     initializeOpenGLFunctions();
 
-    d_ptr->m_map = std::make_unique<Map>(nullptr, d_ptr->m_settings, size(), devicePixelRatioF());
     connect(d_ptr->m_map.get(), SIGNAL(needsRendering()), this, SLOT(update()));
 
     // Set default location
