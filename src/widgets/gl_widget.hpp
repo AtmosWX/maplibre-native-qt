@@ -11,6 +11,7 @@
 #include <QMapLibre/Settings>
 
 #include <QOpenGLWidget>
+#include <QOpenGLFunctions>
 
 #include <memory>
 
@@ -26,7 +27,7 @@ namespace QMapLibre {
 
 class GLWidgetPrivate;
 
-class Q_MAPLIBRE_WIDGETS_EXPORT GLWidget : public QOpenGLWidget {
+class Q_MAPLIBRE_WIDGETS_EXPORT GLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
 
 public:

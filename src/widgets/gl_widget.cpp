@@ -114,6 +114,8 @@ void GLWidget::wheelEvent(QWheelEvent *event) {
     This function is called internally by Qt when the widget is initialized.
 */
 void GLWidget::initializeGL() {
+    initializeOpenGLFunctions();
+
     d_ptr->m_map = std::make_unique<Map>(nullptr, d_ptr->m_settings, size(), devicePixelRatioF());
     connect(d_ptr->m_map.get(), SIGNAL(needsRendering()), this, SLOT(update()));
 
@@ -136,6 +138,8 @@ void GLWidget::initializeGL() {
 void GLWidget::paintGL() {
     d_ptr->m_map->resize(size());
     d_ptr->m_map->setOpenGLFramebufferObject(defaultFramebufferObject(), size() * devicePixelRatioF());
+    glClearColor(0.0667f, 0.0667f, 0.1059f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     d_ptr->m_map->render();
 }
 
