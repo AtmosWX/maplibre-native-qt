@@ -1349,6 +1349,7 @@ void Map::addCustomLayer(const QString &id, std::unique_ptr<CustomLayerHostInter
             renderParams.bearing = params.bearing;
             renderParams.pitch = params.pitch;
             renderParams.fieldOfView = params.fieldOfView;
+            renderParams.projectionMatrix = params.projectionMatrix;
             ptr->render(renderParams);
         }
 

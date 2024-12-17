@@ -189,6 +189,7 @@ struct Q_MAPLIBRE_CORE_EXPORT CustomLayerRenderParameters {
     double bearing;
     double pitch;
     double fieldOfView;
+    std::array<double, 16> projectionMatrix;
 };
 
 class Q_MAPLIBRE_CORE_EXPORT CustomLayerHostInterface {
