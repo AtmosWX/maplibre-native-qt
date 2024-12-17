@@ -18,6 +18,7 @@
 #include <mbgl/map/camera.hpp>
 #include <mbgl/map/map.hpp>
 #include <mbgl/map/map_options.hpp>
+#include <mbgl/map/transform_state.hpp>
 #include <mbgl/math/log2.hpp>
 #include <mbgl/math/minmax.hpp>
 #include <mbgl/renderer/renderer.hpp>
@@ -706,6 +707,62 @@ void Map::jumpTo(const CameraOptions &camera) {
     mbglCamera.padding = d_ptr->margins;
 
     d_ptr->mapObj->jumpTo(mbglCamera);
+}
+
+/*!
+    \brief Fly to the camera options.
+    \param camera The camera options.
+*/
+void Map::flyTo(const CameraOptions &camera) {
+    mbgl::CameraOptions mbglCamera;
+    if (camera.center.isValid()) {
+        const auto center = camera.center.value<Coordinate>();
+        mbglCamera.center = mbgl::LatLng{center.first, center.second};
+    }
+    if (camera.anchor.isValid()) {
+        const auto anchor = camera.anchor.value<QPointF>();
+        mbglCamera.anchor = mbgl::ScreenCoordinate{anchor.x(), anchor.y()};
+    }
+    if (camera.zoom.isValid()) {
+        mbglCamera.zoom = camera.zoom.value<double>();
+    }
+    if (camera.bearing.isValid()) {
+        mbglCamera.bearing = camera.bearing.value<double>();
+    }
+    if (camera.pitch.isValid()) {
+        mbglCamera.pitch = camera.pitch.value<double>();
+    }
+    mbglCamera.padding = d_ptr->margins;
+    constexpr std::chrono::milliseconds duration(2000);
+    d_ptr->mapObj->flyTo(mbglCamera, mbgl::AnimationOptions(duration));
+}
+
+/*!
+    \brief Ease to the camera options.
+    \param camera The camera options.
+*/
+void Map::easeTo(const CameraOptions &camera, std::chrono::steady_clock::duration duration) {
+    mbgl::CameraOptions mbglCamera;
+    mbgl::AnimationOptions mbglAnimation = mbgl::AnimationOptions(duration);
+    if (camera.center.isValid()) {
+        const auto center = camera.center.value<Coordinate>();
+        mbglCamera.center = mbgl::LatLng{center.first, center.second};
+    }
+    if (camera.anchor.isValid()) {
+        const auto anchor = camera.anchor.value<QPointF>();
+        mbglCamera.anchor = mbgl::ScreenCoordinate{anchor.x(), anchor.y()};
+    }
+    if (camera.zoom.isValid()) {
+        mbglCamera.zoom = camera.zoom.value<double>();
+    }
+    if (camera.bearing.isValid()) {
+        mbglCamera.bearing = camera.bearing.value<double>();
+    }
+    if (camera.pitch.isValid()) {
+        mbglCamera.pitch = camera.pitch.value<double>();
+    }
+    mbglCamera.padding = d_ptr->margins;
+    d_ptr->mapObj->easeTo(mbglCamera, mbglAnimation);
 }
 
 /*!

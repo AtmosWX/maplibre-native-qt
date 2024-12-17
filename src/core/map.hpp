@@ -116,6 +116,8 @@ public:
     void setCoordinateZoom(const Coordinate &coordinate, double zoom);
 
     void jumpTo(const CameraOptions &);
+    void flyTo(const CameraOptions &);
+    void easeTo(const CameraOptions &, std::chrono::steady_clock::duration);
 
     void setGestureInProgress(bool inProgress);
 
