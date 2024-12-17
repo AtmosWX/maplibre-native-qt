@@ -40,7 +40,9 @@ namespace QMapLibre {
 
 /*! Default constructor */
 GLWidget::GLWidget(const Settings &settings)
-    : d_ptr(std::make_unique<GLWidgetPrivate>(this, settings)) {}
+    : d_ptr(std::make_unique<GLWidgetPrivate>(this, settings)) {
+    d_ptr->m_map = std::make_unique<Map>(nullptr, d_ptr->m_settings, size(), devicePixelRatioF());
+}
 
 GLWidget::~GLWidget() {
     // Make sure we have a valid context so we
