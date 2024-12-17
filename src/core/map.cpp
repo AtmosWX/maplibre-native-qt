@@ -1424,6 +1424,17 @@ void Map::removeLayer(const QString &id) {
 }
 
 /*!
+    \brief Move a style layer.
+    \param id The layer identifier.
+    \param before The id of the layer to move to.
+
+    This method has no effect if the style layer does not exist.
+*/
+void Map::moveLayer(const QString &id, const QString &before) {
+    d_ptr->mapObj->getStyle().moveLayer(id.toStdString(), before.toStdString());
+}
+
+/*!
     \brief List all existing layers.
     \return List of all existing layer IDs from the current style.
 */

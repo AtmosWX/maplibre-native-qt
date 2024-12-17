@@ -166,6 +166,7 @@ public:
     void addLayer(const QString &id, const QVariantMap &params, const QString &before = QString());
     bool layerExists(const QString &id);
     void removeLayer(const QString &id);
+    void moveLayer(const QString &id, const QString &before);
 
     [[nodiscard]] QVector<QString> layerIds() const;
 
