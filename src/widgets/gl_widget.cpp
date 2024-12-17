@@ -182,12 +182,13 @@ void GLWidgetPrivate::handleMouseMoveEvent(QMouseEvent *event) {
 
     const QPointF delta = position - m_lastPos;
     if (!delta.isNull()) {
-        if (event->buttons() == Qt::LeftButton && (event->modifiers() & Qt::ShiftModifier) != 0) {
-            m_map->pitchBy(delta.y());
-        } else if (event->buttons() == Qt::LeftButton) {
+        if (event->buttons() == Qt::LeftButton) {
             m_map->moveBy(delta);
         } else if (event->buttons() == Qt::RightButton) {
-            m_map->rotateBy(m_lastPos, position);
+            constexpr double rotationFactor = 0.5;
+            constexpr double pitchFactor = 0.5;
+            m_map->setBearing(m_map->bearing() + delta.x() * rotationFactor);
+            m_map->pitchBy(delta.y());
         }
     }
 
