@@ -1361,6 +1361,8 @@ void Map::addCustomLayer(const QString &id, std::unique_ptr<CustomLayerHostInter
     d_ptr->mapObj->getStyle().addLayer(
         std::make_unique<mbgl::style::CustomLayer>(id.toStdString(), std::make_unique<HostWrapper>(std::move(host))),
         before.isEmpty() ? std::optional<std::string>() : std::optional<std::string>(before.toStdString()));
+
+    emit mapChanged(Map::MapChangeLayersDidChange);
 }
 
 /*!
@@ -1402,6 +1404,8 @@ void Map::addLayer(const QString &id, const QVariantMap &params, const QString &
     d_ptr->mapObj->getStyle().addLayer(
         std::move(*layer),
         before.isEmpty() ? std::optional<std::string>() : std::optional<std::string>(before.toStdString()));
+
+    emit mapChanged(Map::MapChangeLayersDidChange);
 }
 
 /*!

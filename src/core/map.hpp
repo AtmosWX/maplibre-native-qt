@@ -55,7 +55,8 @@ public:
         MapChangeDidFinishRenderingMap,
         MapChangeDidFinishRenderingMapFullyRendered,
         MapChangeDidFinishLoadingStyle,
-        MapChangeSourceDidChange
+        MapChangeSourceDidChange,
+        MapChangeLayersDidChange
     };
 
     enum MapLoadingFailure {
