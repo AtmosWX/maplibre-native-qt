@@ -713,7 +713,7 @@ void Map::jumpTo(const CameraOptions &camera) {
     \brief Fly to the camera options.
     \param camera The camera options.
 */
-void Map::flyTo(const CameraOptions &camera) {
+void Map::flyTo(const CameraOptions &camera, std::chrono::steady_clock::duration duration) {
     mbgl::CameraOptions mbglCamera;
     if (camera.center.isValid()) {
         const auto center = camera.center.value<Coordinate>();
@@ -733,7 +733,6 @@ void Map::flyTo(const CameraOptions &camera) {
         mbglCamera.pitch = camera.pitch.value<double>();
     }
     mbglCamera.padding = d_ptr->margins;
-    constexpr std::chrono::milliseconds duration(2000);
     d_ptr->mapObj->flyTo(mbglCamera, mbgl::AnimationOptions(duration));
 }
 
