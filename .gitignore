@@ -3,3 +3,7 @@
 compile_commands.json
 docs/output
 .venv
+build
+install
+cmake-build-debug
+.idea

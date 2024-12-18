@@ -200,7 +200,7 @@ void GLWidgetPrivate::handleWheelEvent(QWheelEvent *event) const {
         return;
     }
 
-    constexpr float wheelConstant = 1200.f;
+    constexpr float wheelConstant = 240.f;
 
     float factor = static_cast<float>(event->angleDelta().y()) / wheelConstant;
     if (event->angleDelta().y() < 0) {
@@ -208,9 +208,21 @@ void GLWidgetPrivate::handleWheelEvent(QWheelEvent *event) const {
     }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-    m_map->scaleBy(1 + factor, event->position());
+    m_map->easeTo(
+        {
+            .anchor = event->position(),
+            .zoom = m_map->zoom() + factor
+        }, 
+        std::chrono::milliseconds(1000 / 5)
+    );
 #else
-    m_map->scaleBy(1 + factor, event->pos());
+    m_map->easeTo(
+        {
+            .anchor = event->pos(),
+            .zoom = m_map->zoom() + factor
+        }, 
+        std::chrono::milliseconds(1000 / 5)
+    );
 #endif
     event->accept();
 }
