@@ -187,7 +187,7 @@ void GLWidgetPrivate::handleMouseMoveEvent(QMouseEvent *event) {
             constexpr double rotationFactor = 0.5;
             constexpr double pitchFactor = 0.5;
             m_map->setBearing(m_map->bearing() + delta.x() * rotationFactor);
-            m_map->pitchBy(delta.y());
+            m_map->pitchBy(delta.y() * pitchFactor);
         }
     }
 
@@ -207,22 +207,12 @@ void GLWidgetPrivate::handleWheelEvent(QWheelEvent *event) const {
         factor = factor > -1 ? factor : 1 / factor;
     }
 
+    constexpr auto smooth_zoom_easing = std::chrono::milliseconds(1000 / 5);
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-    m_map->easeTo(
-        {
-            .anchor = event->position(),
-            .zoom = m_map->zoom() + factor
-        }, 
-        std::chrono::milliseconds(1000 / 5)
-    );
+    m_map->easeTo({.anchor = event->position(), .zoom = m_map->zoom() + factor}, smooth_zoom_easing);
 #else
-    m_map->easeTo(
-        {
-            .anchor = event->pos(),
-            .zoom = m_map->zoom() + factor
-        }, 
-        std::chrono::milliseconds(1000 / 5)
-    );
+    m_map->easeTo({.anchor = event->pos(), .zoom = m_map->zoom() + factor}, smooth_zoom_easing);
 #endif
     event->accept();
 }

@@ -10,8 +10,8 @@
 #include <QMapLibre/Map>
 #include <QMapLibre/Settings>
 
-#include <QOpenGLWidget>
 #include <QOpenGLFunctions>
+#include <QOpenGLWidget>
 
 #include <memory>
 
